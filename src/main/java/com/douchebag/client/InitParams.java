@@ -48,8 +48,8 @@ public class InitParams {
   public InitParams(ServletContext context) {
     CLOSURE_LIBRARY_DIR = context.getInitParameter("closure_library");
     CLOSURE_COMPILER_PATH = context.getInitParameter("closure_compiler");
-    BASE_JS_DIR = context.getRealPath("/WEB-INF/resources/js/com/douchebag/");
-    MAIN_JS_PATH = context.getRealPath("/WEB-INF/resources/js/main.js");
-    CLOSURE_COMPILE_PY = context.getRealPath("/WEB-INF/resources/compile.py");
+    BASE_JS_DIR = context.getRealPath("/WEB-INF/js/com/douchebag/");
+    MAIN_JS_PATH = context.getRealPath("/WEB-INF/js/main.js");
+    CLOSURE_COMPILE_PY = context.getRealPath("/WEB-INF/compile.py");
   }
 }

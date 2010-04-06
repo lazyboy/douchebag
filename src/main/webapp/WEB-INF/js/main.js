@@ -4,8 +4,8 @@ goog.require('douchebag.hashutil'); // This should also pull douchebag.util
 
 
 douchebag.main = function() {
-	var d = douchebag.hashutil.testit('abacus', 'batman');
-	alert(d);
+  var d = douchebag.hashutil.testit('abacus', 'batman');
+  alert(d);
 };
 
 window['_main_'] = douchebag.main;

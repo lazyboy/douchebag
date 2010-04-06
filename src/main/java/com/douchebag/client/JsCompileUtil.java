@@ -29,7 +29,7 @@ public class JsCompileUtil {
     this.params = params;
   }
 
-  public String compile() {
+  public String compile() throws JsCompileException {
     String command = "python " + params.CLOSURE_COMPILE_PY
             + " -c " + params.CLOSURE_COMPILER_PATH
             + " -b " + params.CLOSURE_LIBRARY_DIR
@@ -40,10 +40,10 @@ public class JsCompileUtil {
 
     try {
       String ret = SyscallRunner.doRun(command);
-      System.out.println("Source==========\n" + ret);
+      System.out.println("===========Source==========\n" + ret);
       return ret;
     } catch (Exception e) {
-      return "exception while compiling: " + e.toString();
+      throw new JsCompileException("System error: " + e.toString());
     }
   }
 }

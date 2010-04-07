@@ -65,10 +65,6 @@ public class Main extends HttpServlet {
     }
   }
 
-  protected void getHelper(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-  }
-
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
   /**
@@ -91,7 +87,7 @@ public class Main extends HttpServlet {
    */
   @Override
   public String getServletInfo() {
-    return "Short description";
+    return "Main servlet for serving page.";
   }// </editor-fold>
 
   public enum Param {
@@ -129,6 +125,7 @@ public class Main extends HttpServlet {
     }
     return ret;
   }
+
   private String generateMarkup(Value type) throws JsCompileException {
     StringBuffer buffer = new StringBuffer();
     // Generate the javascript source.
@@ -201,27 +198,8 @@ public class Main extends HttpServlet {
 
     StringBuffer htmlElement = WrapWithTag(headElement.append(bodyElement), "html");
     return htmlElement.toString();
-
-    /*
-    StringBuffer bodyRaw = new StringBuffer().append(
-        body == null ? "Sample body content" : body);
-    StringBuffer titleRaw = new StringBuffer().append(
-        title == null ? "Sample title content" : title);
-    StringBuffer scriptRaw = new StringBuffer().append(
-        script == null ? "" : script);
-    StringBuffer css
-
-    StringBuffer head = WrapWithTag(
-            WrapWithTag(titleRaw, "title").append(WrapScriptTag(scriptRaw)),
-            "head");
-
-    // Add call to main in body
-    bodyRaw.append("<script>window['_main_']();</script>");
-    StringBuffer body = WrapWithTag(bodyRaw, "body");
-    StringBuffer html = WrapWithTag(head.append(body), "html");
-    return html.toString();
-    */
   }
+
   private InitParams initParams;
   private JsCompileUtil jscompileUtil;
 

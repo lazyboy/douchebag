@@ -31,7 +31,7 @@ public class DouchebagServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
           com.douchebag.testing.MyExample.doHibernateDemo();
-            out.println("Hello from DouchebagServlet!");
+          out.println("Hello from DouchebagServlet!");
         } finally { 
             out.close();
         }

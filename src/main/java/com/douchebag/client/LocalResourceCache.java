@@ -32,6 +32,13 @@ public class LocalResourceCache {
   // TODO: Make this thread safe.
   private static Map<String, Resource> contentCache = new HashMap<String, Resource>();
 
+  /**
+   * Reads a local resource and saves it to cache for next reading.
+   *
+   * @param resourcePath Resource path relative to /resources dir.
+   * @return The content of the resource.
+   * @throws IOException
+   */
   public static String read(String resourcePath) throws IOException {
     // Serve it from the cache if it's already there.
     if (!com.douchebag.Constants.DEBUG && contentCache.containsKey(resourcePath)) {

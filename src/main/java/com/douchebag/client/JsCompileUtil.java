@@ -15,8 +15,10 @@
  */
 package com.douchebag.client;
 
+import com.douchebag.Constants;
 import com.douchebag.util.SyscallRunner;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Compiles project javascript.
@@ -50,7 +52,8 @@ public class JsCompileUtil {
 
   public String getCss() throws JsCompileException {
     try {
-      String css = LocalResourceCache.read(params.CSS_PATH);
+      URL cssUrl = getClass().getResource(Constants.CSS_FILE);
+      String css = LocalResourceCache.read(cssUrl.getFile());
       return css;
     } catch (IOException ioe) {
       throw new JsCompileException("Js comp error [css]: " + ioe.toString());

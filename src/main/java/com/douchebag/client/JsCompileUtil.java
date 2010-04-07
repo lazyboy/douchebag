@@ -16,6 +16,7 @@
 package com.douchebag.client;
 
 import com.douchebag.util.SyscallRunner;
+import java.io.IOException;
 
 /**
  * Compiles project javascript.
@@ -40,10 +41,19 @@ public class JsCompileUtil {
 
     try {
       String ret = SyscallRunner.doRun(command);
-      System.out.println("===========Source==========\n" + ret);
+      //System.out.println("===========Source==========\n" + ret);
       return ret;
     } catch (Exception e) {
       throw new JsCompileException("System error: " + e.toString());
+    }
+  }
+
+  public String getCss() throws JsCompileException {
+    try {
+      String css = LocalResourceCache.read(params.CSS_PATH);
+      return css;
+    } catch (IOException ioe) {
+      throw new JsCompileException("Js comp error [css]: " + ioe.toString());
     }
   }
 }

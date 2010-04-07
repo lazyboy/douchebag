@@ -44,6 +44,10 @@ public class InitParams {
    * Path to main javascript file.
    */
   public String MAIN_JS_PATH;
+  /**
+   * Path to main css file
+   */
+  public String CSS_PATH;
 
   public InitParams(ServletContext context) {
     CLOSURE_LIBRARY_DIR = context.getInitParameter("closure_library");
@@ -51,5 +55,6 @@ public class InitParams {
     BASE_JS_DIR = context.getRealPath("/WEB-INF/js/com/douchebag/");
     MAIN_JS_PATH = context.getRealPath("/WEB-INF/js/main.js");
     CLOSURE_COMPILE_PY = context.getRealPath("/WEB-INF/compile.py");
+    CSS_PATH = context.getRealPath("/WEB-INF/css/douchebag.css");
   }
 }

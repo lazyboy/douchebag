@@ -17,6 +17,7 @@
 package com.douchebag.client;
 
 //import java.io.File;
+import com.douchebag.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -26,12 +27,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author lazyboy
  */
 public class Main extends HttpServlet {
+
+  /**
+   * Logger class.
+  private Logger logger = LoggerFactory.getLogger(Main.class);
+   */
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -55,6 +63,10 @@ public class Main extends HttpServlet {
     } finally {
       out.close();
     }
+  }
+
+  protected void getHelper(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,8 +135,23 @@ public class Main extends HttpServlet {
     if (type != Value.HTML_JS_EMBED) {
       return "Not supported yet.";
     }
-    buffer.append(WrapHtmlScript(jscompileUtil.compile())); // Default is HTML_JS_EMBED
+    buffer.append(buildHTML("Douchebag main page",
+                            getCss(),
+                            jscompileUtil.compile(), // Default is HTML_JS_EMBED
+                            "Douchebag content"));
     return buffer.toString();
+  }
+
+  private String getCss() {
+    String css = "";
+    try {
+      css = jscompileUtil.getCss();
+    } catch (JsCompileException jce) {
+      // Return no css in case of error.
+      //logger.debug("Exception adding css tag: " + e.toString());
+      System.out.println("Exception adding css tag: " + jce.toString());
+    }
+    return css;
   }
 
   public static StringBuffer WrapWithTag(StringBuffer content, String tag) {
@@ -134,17 +161,55 @@ public class Main extends HttpServlet {
     return ret;
   }
 
-  public static StringBuffer WrapScriptTag(StringBuffer jsContent) {
-    StringBuffer ret = jsContent;
-    ret.insert(0, "<script type=\"text/javascript\">");
-    ret.append("</script>");
+  public static StringBuffer WrapWithTag(String content, String tag) {
+    return WrapWithTag(new StringBuffer(content), tag);
+  }
+
+  public static StringBuffer WrapWithTag(String content, String startTag,
+      String endTag) {
+    StringBuffer ret = new StringBuffer(content);
+    ret.insert(0, startTag);
+    ret.append(endTag);
     return ret;
   }
 
-  public static String WrapHtmlScript(String script) {
-    StringBuffer bodyRaw = new StringBuffer().append("Sample body content");
-    StringBuffer titleRaw = new StringBuffer().append("Sample title content");
-    StringBuffer scriptRaw = new StringBuffer().append(script);
+  public static String buildHTML(String title, String css, String script, String body) {
+    // Set the default values so we don't eat an NPE.
+    if (body == null) body = "Sample body content";
+    if (title == null) title = "Sample title";
+    if (script == null) script = "alert('script not found');";
+    if (css == null) css = ".body { background-color: red; }";
+
+    // A call to js main start function; appended in the body.
+    String jsMainCall = "<script>window['_main_']();</script>";
+
+
+    StringBuffer titleElement = WrapWithTag(title, "title");
+    StringBuffer cssElement = WrapWithTag(css,
+        "<style type=\"text/css\">", "</style>");
+    StringBuffer scriptElement = WrapWithTag(script,
+        "<script type=\"text/javascript\">", "</script>");
+    StringBuffer bodyElement = WrapWithTag(body + jsMainCall, "body");
+
+    // Build the HTML structure.
+    // title, css, script flat in head.
+    StringBuffer headContent = new StringBuffer()
+        .append(titleElement)
+        .append(cssElement)
+        .append(scriptElement);
+    StringBuffer headElement = WrapWithTag(headContent, "head");
+
+    StringBuffer htmlElement = WrapWithTag(headElement.append(bodyElement), "html");
+    return htmlElement.toString();
+
+    /*
+    StringBuffer bodyRaw = new StringBuffer().append(
+        body == null ? "Sample body content" : body);
+    StringBuffer titleRaw = new StringBuffer().append(
+        title == null ? "Sample title content" : title);
+    StringBuffer scriptRaw = new StringBuffer().append(
+        script == null ? "" : script);
+    StringBuffer css
 
     StringBuffer head = WrapWithTag(
             WrapWithTag(titleRaw, "title").append(WrapScriptTag(scriptRaw)),
@@ -155,6 +220,7 @@ public class Main extends HttpServlet {
     StringBuffer body = WrapWithTag(bodyRaw, "body");
     StringBuffer html = WrapWithTag(head.append(body), "html");
     return html.toString();
+    */
   }
   private InitParams initParams;
   private JsCompileUtil jscompileUtil;

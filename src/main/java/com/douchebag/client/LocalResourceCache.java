@@ -41,6 +41,8 @@ public class LocalResourceCache {
 
     try {
       String content = readHelper(resourcePath);
+      // Insert in the cache.
+      contentCache.put(resourcePath, new Resource(content, -1));
       return content;
     } catch (FileNotFoundException fnfe) {
       // This is really a bad idea.

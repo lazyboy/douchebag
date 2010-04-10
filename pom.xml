@@ -66,6 +66,12 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.6</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.template</groupId>
+      <artifactId>Soy</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -91,4 +97,3 @@
     </repository>
   </repositories>
 </project>
-

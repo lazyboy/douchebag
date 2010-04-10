@@ -18,6 +18,10 @@ package com.douchebag.client;
 
 //import java.io.File;
 import com.douchebag.Constants;
+import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.data.SoyMapData;
+import com.google.template.soy.tofu.SoyTofu;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -35,6 +39,20 @@ import javax.servlet.http.HttpServletResponse;
  * @author lazyboy
  */
 public class Main extends HttpServlet {
+
+  public String foo() {
+    // Bundle the Soy files for your project into a SoyFileSet.
+    String soyPath = initParams.SOY_BASE_DIR + "simple.soy";
+    SoyFileSet sfs = (new SoyFileSet.Builder()).add(new File(soyPath)).build();
+
+    // Compile the template into a SoyTofu object.
+    // SoyTofu has a render method that can render all the templates in the SoyFileSet.
+    SoyTofu tofu = sfs.compileToJavaObj();
+
+    // Call the template with no data.
+    //System.out.println("****" + tofu.render("examples.simple.helloWorld", (SoyMapData) null, null));
+    return tofu.render("examples.simple.helloWorld", (SoyMapData) null, null);
+  }
 
   /**
    * Logger class.
@@ -56,7 +74,12 @@ public class Main extends HttpServlet {
     PrintWriter out = resp.getWriter();
     try {
       Value srcValue = getRequestSrc(req);
-      String markup = generateMarkup(srcValue);
+
+      String extraBodyContent = "If you see the string <b>abacusbatman</b> below then javascript compilation was successful.<br>" +
+          "<div id=\"p1\"></div>" +
+          "If you see a <b>Hello world</b> below then soy compilation was successful.<br>" +
+          foo();
+      String markup = generateMarkup(srcValue, extraBodyContent);
       out.append(markup);
     } catch (JsCompileException jce) {
       out.append("Error compiling javascript: " + jce.toString());
@@ -126,7 +149,7 @@ public class Main extends HttpServlet {
     return ret;
   }
 
-  private String generateMarkup(Value type) throws JsCompileException {
+  private String generateMarkup(Value type, String extraBodyContent) throws JsCompileException {
     StringBuffer buffer = new StringBuffer();
     // Generate the javascript source.
     if (type != Value.HTML_JS_EMBED) {
@@ -135,7 +158,7 @@ public class Main extends HttpServlet {
     buffer.append(buildHTML("Douchebag main page",
                             getCss(),
                             jscompileUtil.compile(), // Default is HTML_JS_EMBED
-                            "Douchebag content"));
+                            extraBodyContent));
     return buffer.toString();
   }
 

@@ -12,4 +12,5 @@ package com.douchebag;
 public class Constants {
   public static boolean DEBUG = true;
   public static String CSS_FILE = "/css/douchebag.css";
+  public static String BASE_SOY_DIR = "/";
 }

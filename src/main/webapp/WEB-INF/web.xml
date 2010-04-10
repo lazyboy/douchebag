@@ -35,4 +35,12 @@
     <param-name>closure_library</param-name>
     <param-value>C:\lib\closure\closure-library-read-only\</param-value>
   </context-param>
+  <context-param>
+    <param-name>closure_template_java_compiler</param-name>
+    <param-value>C:\lib\closure\closure-templates-for-java-latest\</param-value>
+  </context-param>
+  <context-param>
+    <param-name>closure_template_javascript_compiler</param-name>
+    <param-value>C:\lib\closure\closure-templates-for-javascript-latest\</param-value>
+  </context-param>
 </web-app>

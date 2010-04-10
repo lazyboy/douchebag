@@ -17,6 +17,7 @@
 package com.douchebag.client;
 
 import javax.servlet.ServletContext;
+import com.douchebag.Constants;
 
 /**
  *
@@ -44,13 +45,31 @@ public class InitParams {
    * Path to main javascript file.
    */
   public String MAIN_JS_PATH;
+  /**
+   * Path to closure template for java compiler.
+   */
+  public String CLOSURE_TEMPLATE_JAVA_COMPILER;
+  /**
+   * Path to closure template for javascript compiler.
+   */
+  public String CLOSURE_TEMPLATE_JAVASCRIPT_COMPILER;
+  /**
+   * Path to soy root dir.
+   */
+  public String SOY_BASE_DIR;
 
   public InitParams(ServletContext context) {
     CLOSURE_LIBRARY_DIR = context.getInitParameter("closure_library");
     CLOSURE_COMPILER_PATH = context.getInitParameter("closure_compiler");
+    CLOSURE_TEMPLATE_JAVA_COMPILER = context.getInitParameter(
+        "closure_template_java_compiler");
+    CLOSURE_TEMPLATE_JAVASCRIPT_COMPILER = context.getInitParameter(
+        "closure_template_javascript_compiler");
     // TODO: Move stuffs to /resources dir.
     BASE_JS_DIR = context.getRealPath("/WEB-INF/js/com/douchebag/");
     MAIN_JS_PATH = context.getRealPath("/WEB-INF/js/main.js");
     CLOSURE_COMPILE_PY = context.getRealPath("/WEB-INF/compile.py");
+    SOY_BASE_DIR = (getClass().getResource(Constants.BASE_SOY_DIR)).getFile();
+    System.out.println("SOY BASE DIR |" + SOY_BASE_DIR + "|");
   }
 }

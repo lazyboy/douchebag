@@ -1,0 +1,12 @@
+Developer Instructions:
+
+- Just run "mvn install" command, it will download and install all the dependecies.
+- You need to set the closure_compiler and closure_library values to the correct values, download and set them to correct paths (in web.xml)
+- You need python 3.1, and set to PATH correctly.
+
+SOY:
+  - download Soy compiler for java latest from google code.
+  - Install Soy.jar to maven repository using: 
+      mvn install:install-file -DgroupId=com.google.template -DartifactId=Soy -Dversion=1.0 -Dpackaging=jar -Dfile=/path/to/Soy.jar
+  - copy /extras/Soy-1.0.pom to maven repository ~/.m2/repository/com/google/template/Soy/1.0/
+  - Copy Soy.jar to apache tomcat library (needed for soy runtime), e.g. $TOMCAT_DIR/lib

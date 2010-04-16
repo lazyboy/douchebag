@@ -9,6 +9,10 @@
     <servlet-name>Main</servlet-name>
     <servlet-class>com.douchebag.client.Main</servlet-class>
   </servlet>
+    <servlet>
+    <servlet-name>Action</servlet-name>
+    <servlet-class>com.douchebag.server.Action</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>DouchebagServlet</servlet-name>
     <url-pattern>/DouchebagServlet</url-pattern>
@@ -16,6 +20,10 @@
   <servlet-mapping>
     <servlet-name>Main</servlet-name>
     <url-pattern>/Main</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Action</servlet-name>
+    <url-pattern>/Action</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>

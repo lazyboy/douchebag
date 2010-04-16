@@ -22,6 +22,6 @@
 	<!--
 		<mapping resource="contact.hbm.xml" />
 	-->
-
+    <mapping class="com.douchebag.server.entity.Path"/>
 </session-factory>
 </hibernate-configuration>

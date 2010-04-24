@@ -3,7 +3,7 @@
   <display-name>douchebag</display-name>
   <servlet>
     <servlet-name>DouchebagServlet</servlet-name>
-    <servlet-class>com.douchebag.DouchebagServlet</servlet-class>
+    <servlet-class>com.douchebag.testing.DouchebagServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Main</servlet-name>

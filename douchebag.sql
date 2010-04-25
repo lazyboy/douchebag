@@ -8,7 +8,7 @@ CREATE TABLE  `path` (
 
 CREATE TABLE  `sin` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `description` text NOT NULL,
+  `desc` text NOT NULL,
   `start` int(11) NOT NULL default '-1',
   `end` int(11) NOT NULL default '-1',
   `length` int(11) NOT NULL default '-1',
@@ -20,7 +20,7 @@ CREATE TABLE  `droid` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `type` int(11) NOT NULL default '0',
   `name` text NOT NULL,
-  `description` text NOT NULL,
+  `desc` text NOT NULL,
   `tags` text NOT NULL,
   `url` text NOT NULL,
   `localurl` text NOT NULL,

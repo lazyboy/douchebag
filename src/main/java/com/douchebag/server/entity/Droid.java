@@ -24,6 +24,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -35,9 +37,9 @@ import javax.persistence.Table;
  * @author debasis
  */
 @Entity
-@Table(name = "path")
-@NamedQueries({@NamedQuery(name = "Path.findAll", query = "SELECT p FROM Path p"), @NamedQuery(name = "Path.findById", query = "SELECT p FROM Path p WHERE p.id = :id")})
-public class Path implements Serializable {
+@Table(name = "droid")
+@NamedQueries({@NamedQuery(name = "Droid.findAll", query = "SELECT d FROM Droid d"), @NamedQuery(name = "Droid.findById", query = "SELECT d FROM Droid d WHERE d.id = :id"), @NamedQuery(name = "Droid.findByType", query = "SELECT d FROM Droid d WHERE d.type = :type")})
+public class Droid implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,22 +47,47 @@ public class Path implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
+  @Column(name = "type")
+  private int type;
+  @Basic(optional = false)
   @Lob
-  @Column(name = "p")
-  private String p;
-  @ManyToMany(mappedBy = "pathCollection")
+  @Column(name = "name")
+  private String name;
+  @Basic(optional = false)
+  @Lob
+  @Column(name = "desc")
+  private String desc;
+  @Basic(optional = false)
+  @Lob
+  @Column(name = "tags")
+  private String tags;
+  @Basic(optional = false)
+  @Lob
+  @Column(name = "url")
+  private String url;
+  @Basic(optional = false)
+  @Lob
+  @Column(name = "localurl")
+  private String localurl;
+  @JoinTable(name = "droid_sin", joinColumns = {@JoinColumn(name = "fk_droid_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "fk_sin_id", referencedColumnName = "id")})
+  @ManyToMany
   private List<Sin> sinCollection;
 
-  public Path() {
+  public Droid() {
   }
 
-  public Path(Integer id) {
+  public Droid(Integer id) {
     this.id = id;
   }
 
-  public Path(Integer id, String p) {
+  public Droid(Integer id, int type, String name, String desc, String tags, String url, String localurl) {
     this.id = id;
-    this.p = p;
+    this.type = type;
+    this.name = name;
+    this.desc = desc;
+    this.tags = tags;
+    this.url = url;
+    this.localurl = localurl;
   }
 
   public Integer getId() {
@@ -71,12 +98,52 @@ public class Path implements Serializable {
     this.id = id;
   }
 
-  public String getP() {
-    return p;
+  public int getType() {
+    return type;
   }
 
-  public void setP(String p) {
-    this.p = p;
+  public void setType(int type) {
+    this.type = type;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDesc() {
+    return desc;
+  }
+
+  public void setDesc(String desc) {
+    this.desc = desc;
+  }
+
+  public String getTags() {
+    return tags;
+  }
+
+  public void setTags(String tags) {
+    this.tags = tags;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public String getLocalurl() {
+    return localurl;
+  }
+
+  public void setLocalurl(String localurl) {
+    this.localurl = localurl;
   }
 
   public List<Sin> getSinCollection() {
@@ -97,10 +164,10 @@ public class Path implements Serializable {
   @Override
   public boolean equals(Object object) {
     // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Path)) {
+    if (!(object instanceof Droid)) {
       return false;
     }
-    Path other = (Path) object;
+    Droid other = (Droid) object;
     if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
       return false;
     }
@@ -109,7 +176,7 @@ public class Path implements Serializable {
 
   @Override
   public String toString() {
-    return "com.douchebag.server.entity.Path[id=" + id + "]";
+    return "com.douchebag.server.entity.Droid[id=" + id + "]";
   }
 
 }

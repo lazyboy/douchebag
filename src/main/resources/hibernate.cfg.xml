@@ -23,5 +23,7 @@
 		<mapping resource="contact.hbm.xml" />
 	-->
     <mapping class="com.douchebag.server.entity.Path"/>
+    <mapping class="com.douchebag.server.entity.Sin"/>
+    <mapping class="com.douchebag.server.entity.Droid"/>
 </session-factory>
 </hibernate-configuration>
